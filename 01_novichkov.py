@@ -1,4 +1,4 @@
-
+import operator as op
 # Работа со списками
 # Написать код для функций ниже
 # Проверка производится в функции main()
@@ -20,16 +20,26 @@ def func00(words):
 # Подсказка: можно создать два списка, отсортировать их по отдельности перед объединением
 
 def func01(words):
-    # здесь код и не забыть вернуть хоть что-то
-    return
+    with_numbers = list()
+    without = list()
+    for s in words:
+        if s[0] in "0123456789":
+            with_numbers.append(s)
+        else:
+            without.append(s)
+    with_numbers.sort()
+    without.sort()
+    without.extend(with_numbers)
+    return without
 
 
 # 02. Отсортировать по последнему
 # Дан список не пустых tuples, вернуть список, отсортированный по возрастанию
 # последнего элемента tuple
+
 def func02(tuples):
-    # здесь код и не забыть вернуть хоть что-то
-    return
+    tuples.sort(key=op.itemgetter(-1))
+    return tuples
 
 
 # используется для проверки, 
