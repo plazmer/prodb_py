@@ -23,7 +23,7 @@ def func01(words):
     with_numbers = list()
     without = list()
     for s in words:
-        if s[0] in "123456789":
+        if s[0] in "0123456789":
             with_numbers.append(s)
         else:
             without.append(s)
