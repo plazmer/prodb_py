@@ -6,12 +6,11 @@ def func01(words):
     part1=[]
     part2=[]
     for w in words:
-        if words[0].isdigit() is True: #с помощью метода isdigit() ищем какие строки начинаются с чисел 
+        if w[0].isdigit() is True: #с помощью метода isdigit() ищем какие строки начинаются с чисел 
              part1.append(w) #если строка начинается с 0-9, то она добавляется в список part1
         else:
              part2.append(w) #иначе, добавляется в список part2
-    return print(sorted(part2) + part1) #функция print отображает собранный список из part1 и part2( отсортированный по алфавиту)
-    
+    return sorted(part2) + sorted(part1) #сортируем и соединяем 
     
 # 02. Отсортировать по последнему
 # Дан список не пустых tuples, вернуть список, отсортированный по возрастанию
@@ -19,14 +18,14 @@ def func01(words):
 
 def func02(tuples):
     tuples.sort(key=lambda t: t[-1], reverse=False) #сортируем кортеж по последнему элементу, и указываем аргумент у reverse = False (для сортировки по возрастанию)
-    return print(tuples)
+    return tuples
     
 # или 
 
 def func02(tuples):
     reverse=False
     tuples.sort(key=lambda t: t[-1])
-    return print(tuples)
+    return tuples
     
 
 # используется для проверки, 
