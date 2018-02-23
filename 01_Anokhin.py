@@ -27,7 +27,7 @@ def func01(words):
             a.append(c)
         else:
             b.append(c)
-        return sorted(a) + sorted(b)
+    return sorted(b) + sorted(a)
 
 
 # 02. Отсортировать по последнему
