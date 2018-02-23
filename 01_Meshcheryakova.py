@@ -20,17 +20,17 @@ def func00(words):
 # Подсказка: можно создать два списка, отсортировать их по отдельности перед объединением
 
 def func01(words):
-    with_numbers = list()
-    without = list()
+    numbers = list()
+    no_numbers = list()
     for s in words:
-        if s[0] in "0123456789":
-            with_numbers.append(s)
+        if not s[0].isalpha():
+            numbers.append(s)
         else:
-            without.append(s)
-    with_numbers.sort()
-    without.sort()
-    without.extend(with_numbers)
-    return without
+            no_numbers.append(s)
+    numbers.sort()
+    no_numbers.sort()
+    no_numbers.extend(numbers)
+    return no_numbers
 
 
 # 02. Отсортировать по последнему
@@ -76,3 +76,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
