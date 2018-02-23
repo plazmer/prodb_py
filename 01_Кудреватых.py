@@ -20,17 +20,30 @@ def func00(words):
 # Подсказка: можно создать два списка, отсортировать их по отдельности перед объединением
 
 def func01(words):
-    # здесь код и не забыть вернуть хоть что-то
-    return
-
-
+    numb=[]
+    word=[]
+    for w in words:
+        if w[0].isdigit() is False:
+           word.append(w)
+        else:
+           numb.append(w)
+word.sort()
+numb.sort()
+return word + numb
+  
+    
 # 02. Отсортировать по последнему
 # Дан список не пустых tuples, вернуть список, отсортированный по возрастанию
 # последнего элемента tuple
 def func02(tuples):
-    # здесь код и не забыть вернуть хоть что-то
-    return
+    s=sorted(tuples, reverse = True)
+    return s
+    
+#Или
 
+def func02(tuples):
+    tuples.sort(key=op.itemgetter(-1))
+    return tuples
 
 # используется для проверки, 
 def test(got, expected):
