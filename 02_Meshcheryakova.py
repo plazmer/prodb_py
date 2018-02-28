@@ -1,5 +1,8 @@
 import csv
 import re
+import operator as op
+from collections import Counter
+
 #два полезных намёка
 
 # Работа со словарями и файлами
@@ -9,42 +12,49 @@ import re
 # 00. Из списка слов вернуть список tuples в формате слово - количество, 
 # отсортированные по частоте, потом по алфавиту от меньшего к большему
 
-def func00(words): #TODO сделать оптимально
-    tmp = { }    
-    for w in words:
-        if tmp.get(w):
-            tmp[w] +=1
-        else:
-            tmp[w] = 1
-    tuples = sorted(tmp.items(), reverse=False, key=lambda element: (-element[1], element[0]))
-    return tuples
+def func00(words):
+    return sorted(Counter(words).items(), key=lambda element: (-element[1], element[0]))
+    
 
 
 # 01. Вернуть список из словарей - полное имя (name) и телефон (tel) для всех 
 # "Сергей" из файла 02.csv (сгенерирован при помощи Faker)
 # можно использовать дополнительные библиотеки для работы с csv
 # и внимание с кодировкой
-    
+
+
 def func01():
-    #TODO
+    with open("02.csv") as v:
+        reader = csv.reader(v)
+        serg = list()
+        for row in reader:
+            if re.findall("Сергей", row[7]):
+                serg.append({'name': row[7], 'tel': row[8]})
     return serg
 
 # 02. Из файла 02_alice.txt загрузить все слова длиннее 3 букв, вернуть 5 tuple -  самых 
 # частых - слово и количество, отсортированных по частоте встречаемости от большего к меньшему. 
 # При обработке удалить все знаки за исключением букв/цифр, привести всё к нижнему регистру
 def func02():
-    #TODO
-    return tuples
-
+    with open('02_alice.txt') as v:
+        counter = {}
+        for line in v:
+            line = re.sub(r'[^a-zA-Z]', ' ', line).strip().lower().split()
+            for subline in line:
+                if len(subline) > 3:
+                    if counter.get(subline):
+                        counter[subline] += 1
+                    else:
+                        counter[subline] = 1
+    return sorted(counter.items(), key=op.itemgetter(1), reverse=True)[:5]
 
 # используется для проверки, 
 def test(got, expected):
-  if got == expected:
-    prefix = ' OK '
-  else:
-    prefix = '  X '
-  print('%s got: %s \nexpected: %s\n' % (prefix, repr(got), repr(expected)))
-
+    if got == expected:
+        prefix = ' OK '
+    else:
+        prefix = '  X '
+    print('%s got: %s \nexpected: %s\n' % (prefix, repr(got), repr(expected)))
 
 # Запускает проверку
 def main():
@@ -67,3 +77,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
