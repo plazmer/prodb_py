@@ -40,10 +40,10 @@ def func01():
 # частых - слово и количество, отсортированных по частоте встречаемости от большего к меньшему. 
 # При обработке удалить все знаки за исключением букв/цифр, привести всё к нижнему регистру
 def func02():
-    with open('alice.txt') as data:
+    with open('02_alice.txt') as data:
         reg = re.compile('[^a-zA-Z]')
         low_data = reg.sub(' ', re.sub(r'\b\w{1,3}\b', '', data.read().lower())) 
-        return sorted( Counter(low_data.split()).most_common(5), key=lambda element: (-element[1], element[0]
+        return sorted( Counter(low_data.split()).most_common(5), key=lambda element: (-element[1], element[0]))
     
     
 
