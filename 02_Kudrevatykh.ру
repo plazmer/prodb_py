@@ -30,6 +30,7 @@ def func01():
         reader = csv.DictReader(s)
         serg = []
         for row in reader:
+            print(" ".join(row))
             if "Сергей" in row ["7"]:
                 serg.append({"name": row["7"], "tel": row["8"]})
     return serg
@@ -49,7 +50,7 @@ def func02():
                         counter[substring] += 1
                     else:
                          counter[substring] = 1
-    return sorted(counter.items(), key=op.itemgetter(1), reverse=True)[:5]
+    return sorted(counter.items(), reverse=False, key=lambda element: (-element[1], element[0]))[:5]
 
 
 # используется для проверки, 
