@@ -43,7 +43,7 @@ def func02():
     with open('02_alice.txt') as data:
         reg = re.compile('[^a-zA-Z]')
         low_data = reg.sub(' ', re.sub(r'\b\w{1,3}\b', '', data.read().lower())) 
-        return sorted( Counter(low_data.split()).most_common(5), key=lambda element: (-element[1], element[0]))
+    return sorted( Counter(low_data.split()).most_common(5), key=lambda element: (-element[1], element[0]))
     
 
 # используется для проверки, 
