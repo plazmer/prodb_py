@@ -30,9 +30,8 @@ def func01():
         reader = csv.DictReader(s)
         serg = []
         for row in reader:
-            print(" ".join(row))
-            if "Сергей" in row ["7"]:
-                serg.append({"name": row["7"], "tel": row["8"]})
+            if "Сергей" in row ["name"]:
+                serg.append({"name": row["name"], "tel": row["phone"]})
     return serg
 
 # 02. Из файла 02_alice.txt загрузить все слова длиннее 3 букв, вернуть 5 tuple -  самых 
