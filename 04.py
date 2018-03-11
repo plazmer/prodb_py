@@ -6,7 +6,7 @@
 
 
 # Никакой защиты от дурака, ключи подразумеваем, что только англоязычные, без слэшей и прочего, что поломает логику.
-# Добавить на главную счетчик обращений, который будет храниться в Redis и увеличиваться при каждом заходе на главную
+# 1. Реализовать на главной счетчик обращений, который будет храниться в Redis и увеличиваться при каждом заходе на главную
 #
 #
 #
@@ -21,6 +21,16 @@ PORT = '54321'
 
 app = Bottle()
 r = Redis()
+
+@app.route('/')
+def index():
+    #todo
+    counter=5
+    #/todo
+    vars = {'counter':counter}
+    return template('static/index.html', vars)
+
+
 
 @app.post('/set/')
 def set_key():
@@ -51,14 +61,6 @@ def list_keys():
     return  template('% rebase("static/index.html")\n'+response)
 
 
-
-@app.route('/')
-def index():
-    #todo
-    counter=5
-    #/todo
-    vars = {'counter':counter}
-    return template('static/index.html', vars)
 
 #warning: firewall, used ports!!!
 webbrowser.open('http://%s:%s'%(HOST, PORT))
