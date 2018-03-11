@@ -9,6 +9,7 @@
         </style>
     </head>
     <body>
+	{{ get('header') }}
         <div>
             Visits: {{ get('counter') }}
         </div>
@@ -34,5 +35,6 @@
             <h3>Response:</h3>
             {{!get('base')}}
         </div>
+	{{ get('footer') }}
     </body>
 </html>

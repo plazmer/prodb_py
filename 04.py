@@ -5,15 +5,17 @@
 # https://github.com/MicrosoftArchive/redis/releases
 
 
-# Никакой защиты от дурака, ключи подразумеваем, что только англоязычные, без слэшей и прочего, что поломает логику.
+# Базовая защита от дурака - всё, что в ключах не англоязычные буквы/цифры - заменяем на "_", что при обращени, что при записи. 
+# Лучше вынести в отдельную функцию
 # 1. Реализовать на главной счетчик обращений, который будет храниться в Redis и увеличиваться при каждом заходе на главную
-#
-#
-#
+# 2. Реализовать добавление значения
+# 3. Реализовать получение значения
+# 4. Реализовать вывод списка ключей
+# 5. Реализовать по аналогии удаление ключей - по ссылке /del/<key>, в index() добавлены header, footer - куда можно будет писать что-то своё
 
 
 import webbrowser
-from bottle import Bottle, run, request, template
+from bottle import Bottle, run, request, template, get, post
 from redis import Redis
 
 HOST = '127.0.0.1'
@@ -22,15 +24,13 @@ PORT = '54321'
 app = Bottle()
 r = Redis()
 
-@app.route('/')
+@app.get('/')
 def index():
     #todo
     counter=5
     #/todo
-    vars = {'counter':counter}
+    vars = {'counter':counter, 'header':'', 'footer':''}
     return template('static/index.html', vars)
-
-
 
 @app.post('/set/')
 def set_key():
@@ -50,7 +50,7 @@ def get_key(key):
     #/todo
     return  template('% rebase("static/index.html")\n'+response)
 
-@app.route('/list')
+@app.get('/list')
 def list_keys():
     #todo
     keys_list = ['1','2','3']
@@ -61,7 +61,6 @@ def list_keys():
     return  template('% rebase("static/index.html")\n'+response)
 
 
-
-#warning: firewall, used ports!!!
-webbrowser.open('http://%s:%s'%(HOST, PORT))
-run(app, host=HOST, port=PORT, reloader=True, debug=True)
+if __name__ == "__main__":
+    webbrowser.open('http://%s:%s'%(HOST, PORT))
+    run(app, host=HOST, port=PORT, reloader=True, debug=True)
