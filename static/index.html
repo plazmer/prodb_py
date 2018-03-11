@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="utf-8">
+        <title>04</title>
+        <style>
+            .list_item {display:block; float: left; margin:5px; padding:5px; border: 1px gray dotted; width:25%}
+        </style>
+    </head>
+    <body>
+        <div>
+            Visits: {{ get('counter') }}
+        </div>
+        <div>
+            <a href="/list">LIST KEYS</a>
+        </div>
+        <div>
+            <form method="POST" action="/set/">
+                <table>
+                    <tr>
+                        <td>KEY</td><td><input type="text" name="key" size="50" /</td>
+                    </tr>
+                    <tr>
+                        <td>VALUE</td><td><textarea name="value" rows="10" cols="50"></textarea><br /></td>                        
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td><td><input type="submit" value="SET" id="search_submit" /></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div>
+            <h3>Response:</h3>
+            {{!get('base')}}
+        </div>
+    </body>
+</html>
