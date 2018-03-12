@@ -38,7 +38,7 @@ def index():
     counter = r.incr("visit_counter")
     #/todo
     vars = {'counter': counter, 'header': 'Hello, my friend', 'footer': 'Goodluck, my friend'}
-    return template('static/index.html', vars)
+    return template('static/index_novichkov.html', vars)
 
 
 @app.post('/set/')
@@ -50,7 +50,7 @@ def set_key():
     r.set(key, value)
     #/todo
     response = "added key: %s<br /> value: %s" % (key,value)
-    return template('% rebase("static/index.html")\n'+response)
+    return template('% rebase("static/index_novichkov.html")\n'+response)
 
 
 @app.get('/get/<key>')
@@ -59,7 +59,7 @@ def get_key(key):
     value = r.get(key)
     response = '<strong>key</strong>: %s <br /><strong>value</strong>: %s'%(key,value)
     #/todo
-    return template('% rebase("static/index.html")\n'+response)
+    return template('% rebase("static/index_novichkov.html")\n'+response)
 
 
 @app.get('/list')
@@ -70,7 +70,7 @@ def list_keys():
     response = ''
     for key in keys_list:
         response += '<div class="list_item"><a href="/get/%s">%s</a></div>'%(key,key)
-    return template('% rebase("static/index.html")\n'+response)
+    return template('% rebase("static/index_novichkov.html")\n'+response)
 
 
 @app.post('/del/')
@@ -82,7 +82,7 @@ def delete_key():
         response = "deleted key: %s" % key
     else:
         response = "deleted key: there is no such key in the database"
-    return template('% rebase("static/index.html")\n'+response)
+    return template('% rebase("static/index_novichkov.html")\n'+response)
 
 
 if __name__ == "__main__":
