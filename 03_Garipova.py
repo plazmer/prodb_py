@@ -31,7 +31,6 @@ def func00(connection):
 # 01. Загрузить в таблицу func01 содержимое файла 02.csv, названия полей те же.
 # при повторном запуске скрипт должен давать такой же результат. 
 def func01(connection):
-	def func01(connection):
     with open ("02.csv", "r") as file:
         allrow = csv.reader(file)
     
@@ -53,12 +52,15 @@ def func01(connection):
                           username TEXT NOT NULL,
                           website TEXT NOT NULL)''')
         connection.commit()
+	
+	#TODO
+	# INSERT QUERY
     
         
 
-		c.execute('SELECT COUNT(*) as cnt FROM func01')
-		row = dict(c.fetchone())
-		return row['cnt']
+	c.execute('SELECT COUNT(*) as cnt FROM func01')
+	row = dict(c.fetchone())
+	return row['cnt']
 
 # 02. Из заполненной базы данных (func01) вернуть имя человека по номеру телефона
 def func02(phone,connection):
