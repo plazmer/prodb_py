@@ -5,7 +5,7 @@
 # https://github.com/MicrosoftArchive/redis/releases
 
 
-# Базовая защита от дурака - всё, что в ключах не англоязычные буквы/цифры - заменяем на "_", что при обращении, что при записи. 
+# Базовая защита от дурака - всё, что в ключах не англоязычные буквы/цифры - заменяем на "_", что при обращении, что при записи.
 # Лучше вынести в отдельную функцию
 # 1. Реализовать на главной счетчик обращений, который будет храниться в Redis и увеличиваться при каждом заходе на главную
 # 2. Реализовать добавление значения
@@ -15,6 +15,7 @@
 
 
 import webbrowser
+import re
 from bottle import Bottle, run, request, template, get, post
 from redis import Redis
 
@@ -22,43 +23,62 @@ HOST = '127.0.0.1'
 PORT = '54321'
 
 app = Bottle()
-r = Redis()
+r = Redis(decode_responses=True)
+
+
+def protection(key):
+    return re.sub(r'\W', '_', key, flags=re.ASCII)
+
 
 @app.get('/')
 def index():
     #todo
-    counter=5
+    counter = r.incrby("visit_counter")
     #/todo
-    vars = {'counter':counter, 'header':'', 'footer':''}
+    vars = {'counter': counter,
+            'header': 'Удаление производится по ссылке /del/<key>',
+            'footer': 'Goodluck'}
     return template('static/index.html', vars)
+
 
 @app.post('/set/')
 def set_key():
     key = request.forms.get('key')
     value = request.forms.get('value')
     #todo
-
+    key = protection(key)
+    r.set(key, value)
     #/todo
-    response = "added key: %s<br /> value: %s" % (key,value)
+    response = "<strong>added key</strong>: {}<br /><strong>value</strong>: {}".format(key, value)
     return template('% rebase("static/index.html")\n'+response)
+
 
 @app.get('/get/<key>')
 def get_key(key):
-    #todo
-    value = 'for testing only, replace real code'
-    response = '<strong>key</strong>: %s <br /><strong>value</strong>: %s'%(key,value)
+    # todo
+    value = r.get(key)
+    response = '<strong>key</strong>: {}<br /><strong>value</strong>: {}'.format(key, value)
     #/todo
-    return  template('% rebase("static/index.html")\n'+response)
+    return template('% rebase("static/index.html")\n'+response)
+
 
 @app.get('/list')
 def list_keys():
-    #todo
-    keys_list = ['1','2','3']
-    #/todo
     response = ''
-    for key in keys_list:
-        response += '<div class="list_item"><a href="/get/%s">%s</a></div>'%(key,key)
-    return  template('% rebase("static/index.html")\n'+response)
+    for key in r.scan_iter():
+        response += '<div class="list_item"><a href="/get/{}">{}</a></div>'.format(key, key)
+    return template('% rebase("static/index.html")\n'+response)
+
+
+@app.get('/del/<key>')
+def delete_key(key):
+    key = protection(key)
+    if r.exists(key):
+        r.delete(key)
+        response = "deleted key: {}".format(key)
+    else:
+        response = "no key"
+    return template('% rebase("static/index.html")\n'+response)
 
 
 if __name__ == "__main__":
