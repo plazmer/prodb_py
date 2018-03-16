@@ -11,7 +11,6 @@ DATABASE_NAME = '../queries.db'
 # 00. Создать таблицу для хранения данных в формате ключ-значение, заполнить, вернуть результат
 def func00(connection): 
     c = connection.cursor()
-    #https://www.sqlite.org/datatype3.html
     c.execute('DROP TABLE IF EXISTS func00')
     c.execute('''CREATE TABLE IF NOT EXISTS func00 (
                       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
@@ -30,10 +29,11 @@ def func00(connection):
 
 # 01. Загрузить в таблицу func01 содержимое файла 02.csv, названия полей те же.
 # при повторном запуске скрипт должен давать такой же результат. 
+
 def func01(connection):
-    with open ("02.csv", "r") as file:
-        rows = csv.reader(file)
-    
+    with open ('02.csv') as data:
+        rows = csv.reader(data)
+
         c = connection.cursor()
         c.execute('DROP TABLE IF EXISTS func01')
         c.execute('''CREATE TABLE IF NOT EXISTS func01 (
@@ -53,13 +53,11 @@ def func01(connection):
                           website TEXT NOT NULL)''')
         connection.commit()
 
-
         next(rows)
         for row in rows:
-            if len(row[0]) != 0:
-                c.execute('''INSERT INTO func01
-                            (address,birthdate,blood_group,company,job,mail,name,phone,residence,sex,ssn,username,website)
-                          VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)''', tuple(rows)[1:])
+           c.execute('''INSERT INTO func01
+                        (address,birthdate,blood_group,company,job,mail,name,phone,residence,sex,ssn,username,website)     
+                        VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)''', (row)[1:])
         connection.commit()
     
         c.execute('SELECT COUNT(*) as cnt FROM func01')
@@ -67,16 +65,14 @@ def func01(connection):
         return row['cnt']
 
 # 02. Из заполненной базы данных (func01) вернуть имя человека по номеру телефона
+
 def func02(phone,connection):
     c = connection.cursor()
     c.execute('SELECT name FROM func01 WHERE phone=?', (phone,))
     result = c.fetchone()
-    try: 
-        return result['name']
-    except:
-        return result
-
-
+    return result ['name'] if result is not None else None
+    
+   
 # используется для проверки, 
 def test(got, expected):
   if got == expected:
@@ -109,4 +105,4 @@ def main():
     conn.close()
 
 if __name__ == '__main__':
-    main()
+main()
