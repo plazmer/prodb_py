@@ -35,10 +35,11 @@ import io
 import sqlite3
 from pymemcache.client.base import Client
 
-HOST = '0.0.0.0'
-PORT = '54321'
+HOST = '127.0.0.1'
+PORT = '20321'
 
 app = Bottle()
+application = app
 
 
 class SqliteDb:
