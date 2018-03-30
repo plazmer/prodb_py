@@ -32,10 +32,11 @@ from bottle import Bottle, run, request, template, get, post
 import json
 import sqlite3
 
-HOST = '0.0.0.0'
-PORT = '54321'
+HOST = '127.0.0.1'
+PORT = '20321'
 
 app = Bottle()
+application = app
 
 class SqliteDb:
     connection = None
