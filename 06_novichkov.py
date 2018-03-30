@@ -53,7 +53,7 @@ class SqliteDb:
 
     def __init__(self, db_file):
         if db_file:
-            self.default_db = '../06.db'
+            self.default_db = '../06_novichkov.db'
             self.connection = sqlite3.connect(self.default_db)
             self.connection.row_factory = sqlite3.Row
             self.cursor = self.connection.cursor()
