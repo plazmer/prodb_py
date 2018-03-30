@@ -28,6 +28,7 @@ https://ru.stackoverflow.com/questions/443608/singleton-%D0%BD%D0%B0-python
 """
 
 from bottle import Bottle, run, request, template, get, post
+import re
 import json
 import zipfile
 import csv
@@ -35,16 +36,14 @@ import io
 import sqlite3
 from pymemcache.client.base import Client
 
-HOST = '0.0.0.0'
-PORT = '54321'
+HOST = '127.0.0.1'
+PORT = '20321'
 
 app = Bottle()
 
 
 class SqliteDb:
     __instance = None
-    connection = None
-    default_db = ''
 
     @staticmethod
     def inst(db_file="file_name"):
@@ -54,7 +53,7 @@ class SqliteDb:
 
     def __init__(self, db_file):
         if db_file:
-            self.default_db = '../06_novichkov.db'
+            self.default_db = '../06.db'
             self.connection = sqlite3.connect(self.default_db)
             self.connection.row_factory = sqlite3.Row
             self.cursor = self.connection.cursor()
@@ -63,52 +62,38 @@ class SqliteDb:
         self.cursor.executemany("INSERT INTO million_headlines (publish_date,headline_text) VALUES (?,?)", rows)
         self.connection.commit()
 
-    def get(self, rowid):
-        self.cursor.execute("SELECT * FROM million_headlines WHERE id=?", (rowid,))
-        row = self.cursor.fetchone()
-        if row:
-            row = dict(row)
-            return row
+    def get(self, query):
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+        if rows:
+            return list(map(dict, rows))
         else:
-            return {"response": "error"}
+            return [{"response": "error"}]
 
     def get_by(self, date):
-        self.cursor.execute("SELECT id FROM million_headlines WHERE publish_date=?", (str(date),))
-        rows_id = self.cursor.fetchall()
-        if rows_id:
-            cache = NoSQLCache.inst()
-            return_list = []
-            for i in rows_id:
-                return_list.append(cache.get(i[0]))
-            return return_list
-        else:
-            return {"response": "error"}
+        key = "SELECT * FROM million_headlines WHERE publish_date='{}'".format(date)
+        cache = NoSQLCache.inst()
+        return cache.get(key)
 
     def delete(self, rowid):
         self.cursor.execute("DELETE FROM million_headlines WHERE id=?", (rowid,))
         self.connection.commit()
 
     def rand(self):
-        self.cursor.execute("SELECT publish_date as date FROM million_headlines ORDER BY RANDOM() LIMIT 1")
-        return self.get_by(dict(self.cursor.fetchone())['date'])
+        self.cursor.execute("select * from million_headlines where id = (abs(random()) % (select (select max(id) from million_headlines)+1));")
+        return self.get_by(dict(self.cursor.fetchone())['publish_date'])
         # TODO return rows for random day
 
     def stat(self):
         # TODO sql query like:
         # SELECT date_of_news, count(*) FROM news GROUP BY date_of_news ORDER BY date_of_news
-        self.cursor.execute('''SELECT publish_date, count(*) 
-                            FROM million_headlines GROUP BY publish_date ORDER BY publish_date''')
-        statistics = self.cursor.fetchall()
-        keys = ('date', 'count')
-        return_list = []
-        for s in statistics:
-            return_list.append(dict(list(zip(keys, s))))
-        return return_list
+        key = "SELECT publish_date, count(*) as count FROM million_headlines GROUP BY publish_date ORDER BY publish_date"
+        cache = NoSQLCache.inst()
+        return cache.get(key)
+
 
 class NoSQLCache:
     __instance = None
-    connection = None
-    sql_connection = None  # object of class SqliteDB
     timeout = 5
 
     @staticmethod
@@ -122,12 +107,13 @@ class NoSQLCache:
         self.sql_db = sql_db_object
 
     def get(self, key):
-        value = self.client.get(str(key))
+        key_corrector = re.sub(r' ', '$', key)
+        value = self.client.get(key_corrector)
         if value:
             return eval(value.decode('utf-8'))
         else:
             value = self.sql_db.get(key)
-            self.set(str(key), value, self.timeout)
+            self.set(key_corrector, value, self.timeout)
             return value
 
     def set(self, key, value, timeout):
@@ -143,7 +129,6 @@ def index():
 def bydate(date):
     cache = NoSQLCache.inst()
     j = json.dumps(cache.sql_db.get_by(date))
-    """JSON ENCODED: '[{"id": 1, "date": "2018-03-01", "title": "test1"}, {"id": 2, "date": "2018-03-02", "title": "test2"}]' """
     return j
 
 
@@ -151,7 +136,6 @@ def bydate(date):
 def rand():
     cache = NoSQLCache.inst()
     j = json.dumps(cache.sql_db.rand())
-    """JSON ENCODED: '[{"id": 1, "date": "2018-03-01", "title": "test1"}, {"id": 2, "date": "2018-03-02", "title": "test2"}]' """
     return j
 
 
@@ -159,7 +143,6 @@ def rand():
 def stat():
     cache = NoSQLCache.inst()
     j = json.dumps(cache.sql_db.stat())
-    """JSON ENCODED: '[{"id": 1, "date": "2018-03-01", "count": 100}, {"id": 2, "date": "2018-03-02", "count": 7}]' """
     return j
 
 
@@ -170,7 +153,7 @@ def load_to_DB(file_name="million-headlines.zip"):
                                   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
                                   publish_date TEXT NOT NULL, 
                                   headline_text TEXT NOT NULL)''')
-    cache.execute('''CREATE INDEX IF NOT EXISTS pubdate ON million_headlines(publish_date)''')
+    cache.sql_db.cursor.execute('''CREATE INDEX IF NOT EXISTS pubdate ON million_headlines(publish_date)''')
     cache.sql_db.connection.commit()
     with zipfile.ZipFile(file_name, 'r') as myzip:
         with myzip.open('abcnews-date-text.csv', 'r') as mycsv:
