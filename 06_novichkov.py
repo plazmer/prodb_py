@@ -170,7 +170,7 @@ def load_to_DB(file_name="million-headlines.zip"):
                                   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
                                   publish_date TEXT NOT NULL, 
                                   headline_text TEXT NOT NULL)''')
-    cache.execute('''CREATE INDEX IF NOT EXISTS pubdate ON million_headlines(publish_date)''')
+    cache.sql_db.cursor.execute('''CREATE INDEX IF NOT EXISTS pubdate ON million_headlines(publish_date)''')
     cache.sql_db.connection.commit()
     with zipfile.ZipFile(file_name, 'r') as myzip:
         with myzip.open('abcnews-date-text.csv', 'r') as mycsv:
