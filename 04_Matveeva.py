@@ -25,7 +25,7 @@ PORT = '54321'
 app = Bottle()
 r = Redis(decode_responses=True)
 
-#def protection(key):
+def protection(key):
     return re.sub(r'\W', '_', key, flags=re.ASCII)
 
 @app.get('/')
@@ -36,8 +36,7 @@ def index():
 @app.post('/set/')
 def set_key():
     key = request.forms.get('key')
-    key = re.sub(r'\W', '_', key, flags=re.ASCII) #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    #key = protection(key)
+    key = protection(key)
     value = request.forms.get('value') 
     r.set(key, value)
     response = "added key: %s<br /> value: %s" % (key,value)
@@ -59,7 +58,7 @@ def list_keys():
 
 @app.get('/del/<key>')
 def del_key(key):
-    #key = protection(key)
+    key = protection(key)
     if key in r.keys():
         r.delete(key)
         response = '<strong>The key deleted successfully! The next key<strong>: %s'%(key)
