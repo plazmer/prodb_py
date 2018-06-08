@@ -1,4 +1,0 @@
-  File "01_garipova.py", line 26
-    if w[0].isalpha() == True:
-                             ^
-TabError: inconsistent use of tabs and spaces in indentation

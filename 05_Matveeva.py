@@ -16,6 +16,7 @@
 
 from bottle import Bottle, run, request, template, get, post
 from pymongo import MongoClient
+import webbrowser
 
 HOST = '127.0.0.1'
 PORT = '54321'

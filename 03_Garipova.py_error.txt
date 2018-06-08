@@ -1,4 +1,0 @@
-  File "03_Garipova.py", line 61
-    c.execute('SELECT COUNT(*) as cnt FROM func01')
-                                                  ^
-TabError: inconsistent use of tabs and spaces in indentation
