@@ -31,49 +31,46 @@ def func00(connection):
 # 01. Загрузить в таблицу func01 содержимое файла 02.csv, названия полей те же.
 # при повторном запуске скрипт должен давать такой же результат. 
 def func01(connection):
-    with open ("02.csv", "r") as file:
-        allrow = csv.reader(file)
-    
-        c = connection.cursor()
-        c.execute('DROP TABLE IF EXISTS func01')
-        c.execute('''CREATE TABLE IF NOT EXISTS func01 (
-                          id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                          address TEXT NOT NULL, 
-                          birthdate TEXT NOT NULL,
-                          blood_group TEXT NOT NULL,
-                          company TEXT NOT NULL,
-                          job TEXT NOT NULL,
-                          mail TEXT NOT NULL, 
-                          name TEXT NOT NULL,
-                          phone TEXT NOT NULL,
-                          residence TEXT NOT NULL,
-                          sex TEXT NOT NULL,
-                          ssn TEXT NOT NULL,
-                          username TEXT NOT NULL,
-                          website TEXT NOT NULL)''')
+    with open ('02.csv') as file: 
+        reader = csv.reader(file) 
+        c = connection.cursor ()
+        c.execute ('DROP TABLE IF EXISTS func01')
+        c.execute ('''CREATE TABLE IF NOT EXISTS func01 (
+                               id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                               address TEXT NOT NULL,
+                               birthdate TEXT NOT NULL,
+                               blood_group TEXT NOT NULL,
+                               company TEXT NOT NULL,
+                               job TEXT NOT NULL,
+                               mail TEXT NOT NULL,
+                               name TEXT NOT NULL,
+                               phone TEXT NOT NULL,
+                               residence TEXT NOT NULL,
+                               sex TEXT NOT NULL,
+                               ssn TEXT NOT NULL,
+                               username TEXT NOT NULL,
+                               website TEXT NOT NULL)''')
         connection.commit()
-	
-	#TODO
-	# INSERT QUERY
-    
-        
 
-	c.execute('SELECT COUNT(*) as cnt FROM func01')
-	row = dict(c.fetchone())
-	return row['cnt']
+        next(reader)
+        for row in reader:
+            if len(row[0]) != '':
+                c.execute('''INSERT INTO func01
+                        (address,birthdate,blood_group,company,job,mail,name,phone,residence,sex,ssn,username,website)     
+                        VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)''', tuple(row)[1:])
+        connection.commit()
+
+        c.execute('SELECT COUNT(*) as cnt FROM func01')
+        row = dict(c.fetchone())
+        return row['cnt'] 
+
 
 # 02. Из заполненной базы данных (func01) вернуть имя человека по номеру телефона
 def func02(phone,connection):
-
-	
-	def func02(phone,connection):
-    c = connection.cursor()
+    c = connection.cursor ()
     c.execute('SELECT name FROM func01 WHERE phone=?', (phone,))
-    result = c.fetchone()
-    try: 
-        return result['name']
-    except:
-        return result
+    row = c.fetchone()
+    return row ['name'] if row is not None else None
 
 
 # используется для проверки, 
