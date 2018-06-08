@@ -10,22 +10,22 @@ DATABASE_NAME = '../queries.db'
 
 # 00. Создать таблицу для хранения данных в формате ключ-значение, заполнить, вернуть результат
 def func00(connection): 
-    c = connection.cursor() #Создаем курсор-специальный объект который делает запросы и получает их результаты
+    c = connection.cursor()
     #https://www.sqlite.org/datatype3.html
-    c.execute('DROP TABLE IF EXISTS func00') #выполнить
+    c.execute('DROP TABLE IF EXISTS func00')
     c.execute('''CREATE TABLE IF NOT EXISTS func00 (
                       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
                       key TEXT NOT NULL, 
                       value TEXT NOT NULL)''')
     c.execute('''CREATE UNIQUE INDEX IF NOT EXISTS func00_key ON func00(key)''')
-    connection.commit() #сохранить
+    connection.commit()
     
     c.execute('INSERT INTO func00 (key,value) VALUES(:name,:value)',{'name':2,'value':'test2'})
     c.execute('INSERT INTO func00 (key,value) VALUES(?,?)',('33','test3'))
     connection.commit()
     
     c.execute('SELECT value FROM func00 WHERE key=?',('33',))
-    row = dict(c.fetchone()) #Получаем результат сделанного запроса, создав словарь
+    row = dict(c.fetchone())
     return row['value']
 
 # 01. Загрузить в таблицу func01 содержимое файла 02.csv, названия полей те же.
@@ -71,10 +71,6 @@ def func02(phone,connection):
     c.execute('SELECT name FROM func01 WHERE phone=?', (phone,))
     row = c.fetchone()
     return row ['name'] if row is not None else None
-    
-    
-    
-    
 
 
 # используется для проверки, 
