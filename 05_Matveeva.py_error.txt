@@ -1,9 +1,0 @@
-  counter = counters.find_and_modify(query={"_id": 1}, update={"$inc": {"hits": 1}})["hits"]
-Traceback (most recent call last):
-  File "E:\Dropbox\Институт\БД про\ДЗ\prodb_py\bottle.py", line 997, in _handle
-    out = route.call(**args)
-  File "E:\Dropbox\Институт\БД про\ДЗ\prodb_py\bottle.py", line 1998, in wrapper
-    rv = callback(*a, **ka)
-  File "05_Matveeva.py", line 38, in index
-    counter = counters.find_and_modify(query={"_id": 1}, update={"$inc": {"hits": 1}})["hits"]
-TypeError: 'NoneType' object is not subscriptable

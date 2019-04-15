@@ -1,4 +1,0 @@
-  File "05_Gritsaenko.py", line 82
-    response += '''<div class="list_item"><a href="/get/%s">Get key %s</a><br />
-           ^
-IndentationError: expected an indented block

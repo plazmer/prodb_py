@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "01_Galinova.py", line 73, in <module>
+    main()
+  File "01_Galinova.py", line 57, in main
+    test(func01(['1aa', '2bb', 'axx', 'xzz', 'xaa']),
+NameError: name 'func01' is not defined

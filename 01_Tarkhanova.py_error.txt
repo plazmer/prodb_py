@@ -1,4 +1,0 @@
-  File "01_Tarkhanova.py", line 78
-    main()
-       ^
-IndentationError: expected an indented block

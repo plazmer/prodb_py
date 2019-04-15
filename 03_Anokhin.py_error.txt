@@ -1,4 +1,0 @@
-  File "03_Anokhin.py", line 60
-    connection.commit()
-    ^
-IndentationError: unexpected indent
