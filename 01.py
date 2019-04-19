@@ -1,48 +1,51 @@
 # Формат сдачи работы: Pull Request файла 01_Фамилия.py 
 # Фамилия на русском
-#
-# Работа со списками
-# Написать код для функций ниже
-# Проверка производится в функции main()
-# Если тест не прошел успешно, работа не засчитана.
 
-# 00. Пример. Дан список (list) строк. Вернуть число - количество строк, у которых
-# 1. длина строки 2 и больше
-# 2. первый и последний символ одинаковые
+## INT / FLOAT
 
+# Пример:
+# Возвести переданное число в квадрат и вернуть
+def func_num_01( number ):
+    return number * number
+    
 
-
-"""
-Дан файл https://data.gov.ru/opendata/7710549038-rosapprcert/data-20190115T1347-structure-20161222T1355.csv?encoding=UTF-8
-Реестр зарегистрированных сертификатов соответствия на средства связи
-Паспорт набора: https://data.gov.ru/opendata/7710549038-rosapprcert
-
-"""
+# Передано значение температуры в градусах Цельсия, вернуть в Кельвинах
+def func_num_02( number ):
+    return 
 
 
-def func00(words):
-    count = 0
-    for w in words:
-        if len(w)>=2 and w[0]==w[-1]:
-            count += 1
-    return count
+# Если переданное число больше 2.5, вернуть 1, если меньше 2.5 вернуть 0
+def func_num_03( number ):
+    return 
 
 
-# 01. Из списка строк вернуть список в отсортированном по алфавиту порядке, но строки 
-# начинающиеся с числа (0-9) должны идти после строк, начинающихся с букв
-# Подсказка: можно создать два списка, отсортировать их по отдельности перед объединением
+# Передана строка, содержащая целое число. Вернуть число, умноженное на 5
+def func_num_04( string ):
+    return 
 
-def func01(words):
-    # здесь код и не забыть вернуть хоть что-то
+
+# Передано дробное число, вернуть целую часть
+def func_num_05( float_number ):
+    return 
+
+
+# Передано дробное число, вернуть округленную до 2 знаков часть после запятой
+def func_num_06( float_number ):
+    return 
+
+
+# Задача 1
+# Вернуть текст "func01"
+def func01():
+    return 
+
+# Задача 2
+# Вернуть переданный текст, дописав к нему " finished"
+def func02( msg ):
     return
 
-
-# 02. Отсортировать по последнему
-# Дан список не пустых tuples, вернуть список, отсортированный по возрастанию
-# последнего элемента tuple
-def func02(tuples):
-    # здесь код и не забыть вернуть хоть что-то
-    return
+# Задача 3
+# 
 
 
 # используется для проверки, 
@@ -51,31 +54,35 @@ def test(got, expected):
     prefix = ' OK '
   else:
     prefix = '  X '
-  print('%s got: %s expected: %s' % (prefix, repr(got), repr(expected)))
+  print('%s \n Получено: %s \nОжидалось: %s\n' % (prefix, repr(got), repr(expected)))
 
 
-# Запускает проверку
 def main():
-    print('func00')
-    test(func00(['abba', 'xyz01', 'nn', 'y', '444']), 3)
-    test(func00(['', 'a', 'ab', 'cvc', 'jj']), 2)
-    test(func00(['rrr', 'db', 'pro', 'hello']), 1)
+    print('func_int_01')
+    test(func_num_01(7), 49)
 
+    print('func_int_02')
+    test(func_num_02(0), 273.15)
+
+    print('func_int_03')
+    test(func_num_03(0), 0)
+    test(func_num_03(3), 1)
+
+    print('func_int_04')
+    test(func_num_04(" 297 "), 297*5)
+
+    print('func_int_05')
+    test(func_num_05(9.9), 9)
+
+    print('func_int_06')
+    test(func_num_06(9.99), 0.99)
+    
     print('func01')
-    test(func01(['1aa', '2bb', 'axx', 'xzz', 'xaa']),
-                ['axx', 'xaa', 'xzz', '1aa', '2bb'])
-    test(func01(['ccc', 'bbb', '9aa', 'xcc', 'xaa']),
-                ['bbb', 'ccc', 'xaa', 'xcc', '9aa'])
-    test(func01(['mix', 'xyz', '6apple', 'xanadu', 'aardvark']),
-                ['aardvark', 'mix', 'xanadu', 'xyz', '6apple'])
-
+    test(func01(), 'func01')
+    
     print('func02')
-    test(func02([(1, 3), (3, 2), (2, 1)]),
-                [(2, 1), (3, 2), (1, 3)])
-    test(func02([(2, 3), (1, 2), (3, 1)]),
-                [(3, 1), (1, 2), (2, 3)])
-    test(func02([(1, 7), (1, 3), (3, 4, 5), (2, 2)]),
-                [(2, 2), (1, 3), (3, 4, 5), (1, 7)])
+    test(func02('test'), 'test finished')
+
 
 if __name__ == '__main__':
     main()
