@@ -1,5 +1,6 @@
 # Формат сдачи работы: Pull Request файла 01_Фамилия.py 
 # Фамилия на русском
+# Добиваемся, чтобы все тесты проходили успешно, потом отсылаем результат
 
 ## INT / FLOAT
 
@@ -34,54 +35,63 @@ def func_num_06( float_number ):
     return 
 
 
-# Задача 1
+## STR
 # Вернуть текст "func01"
-def func01():
+def func_str_01():
     return 
 
-# Задача 2
+
 # Вернуть переданный текст, дописав к нему " finished"
-def func02( msg ):
+def func_str_02( msg ):
     return
 
-# Задача 3
-# 
+
+# Вернуть переданный текст, заменив все буквы на заглавные
+def func_str_03( msg ):
+    return 
+
+
+# Вернуть длину переданной строки
+def func_str_04( msg ):
+    return 
+
+
+# Если длина текста больше 5 символов, вернуть с 3 по 5 символы, иначе вернуть пустую строку
+def func_str_05( msg ):
+    return 
+
+
+# Передан шаблон и число, подставить внутрь шаблона число, вернуть результат
+def func_str_06( msg, number ):
+    return 
 
 
 # используется для проверки, 
-def test(got, expected):
+def test(msg, got, expected):
   if got == expected:
     prefix = ' OK '
   else:
     prefix = '  X '
-  print('%s \n Получено: %s \nОжидалось: %s\n' % (prefix, repr(got), repr(expected)))
+  print('%s\t%s\tПолучено: %s \tОжидалось: %s' % (msg, prefix, repr(got), repr(expected)))
 
 
 def main():
-    print('func_int_01')
-    test(func_num_01(7), 49)
-
-    print('func_int_02')
-    test(func_num_02(0), 273.15)
-
-    print('func_int_03')
-    test(func_num_03(0), 0)
-    test(func_num_03(3), 1)
-
-    print('func_int_04')
-    test(func_num_04(" 297 "), 297*5)
-
-    print('func_int_05')
-    test(func_num_05(9.9), 9)
-
-    print('func_int_06')
-    test(func_num_06(9.99), 0.99)
+    test('func_int_01', func_num_01(7), 49)
+    test('func_int_02', func_num_02(0), 273.15)
+    test('func_int_03', func_num_03(0), 0)
+    test('func_int_03', func_num_03(3), 1)
+    test('func_int_04', func_num_04(" 297 "), 297*5)
+    test('func_int_05', func_num_05(9.9), 9)
+    test('func_int_06', func_num_06(9.99), 0.99)
     
-    print('func01')
-    test(func01(), 'func01')
-    
-    print('func02')
-    test(func02('test'), 'test finished')
+    test('func_str_01', func_str_01(), 'func01')
+    test('func_str_02', func_str_02('test'), 'test finished')
+    test('func_str_03', func_str_03('tEsT по-РуссКи'), 'TEST ПО-РУССКИ')
+    test('func_str_05', func_str_04('123'), 3)
+    test('func_str_05', func_str_05('123'), '')
+    test('func_str_05', func_str_05('12345'), '45')
+    test('func_str_05', func_str_06('Вы дали число ** %s **', 42), 'Вы дали число ** 42 **')
+     
 
 
 if __name__ == '__main__':
