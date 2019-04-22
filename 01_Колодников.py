@@ -63,8 +63,7 @@ def func_str_05( msg ):
 
 # Передан шаблон и число, подставить внутрь шаблона число, вернуть результат
 def func_str_06( msg, number ):
-    # Верно или я не понял, что от меня хотят??
-    return msg.replace("%s", str(number))
+    return msg % number
 
 
 # используется для проверки,
