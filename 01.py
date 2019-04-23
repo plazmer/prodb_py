@@ -88,7 +88,7 @@ def main():
     test('func_str_02', func_str_02('test'), 'test finished')
     test('func_str_03', func_str_03('tEsT по-РуссКи'), 'TEST ПО-РУССКИ')
     test('func_str_05', func_str_04('123'), 3)
-    test('func_str_05', func_str_05('123'), '')
+    test('func_str_05', func_str_05('1234'), '')
     test('func_str_05', func_str_05('12345'), '45')
     test('func_str_05', func_str_06('Вы дали число ** %s **', 42), 'Вы дали число ** 42 **')
      
