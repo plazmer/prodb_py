@@ -32,7 +32,7 @@ def func_num_05( float_number ):
 
 # Передано дробное число, вернуть округленную до 2 знаков часть после запятой
 def func_num_06( float_number ):
-    return round( float_number, 2 )
+    return round( float_number-int(float_number), 2 )
 
 
 ## STR
@@ -58,12 +58,12 @@ def func_str_04( msg ):
 
 # Если длина текста больше 5 символов, вернуть с 3 по 5 символы, иначе вернуть пустую строку
 def func_str_05( msg ):
-    return msg [2:5] if len( msg )>5 else ''
+    return msg [3:5] if len( msg )>4 else ''
 
 
 # Передан шаблон и число, подставить внутрь шаблона число, вернуть результат
 def func_str_06( msg, number ):
-    return msg.replace('%s', number)
+    return msg % number
 
 
 # используется для проверки, 
