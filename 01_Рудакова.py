@@ -43,7 +43,7 @@ def func_str_01():
 
 # Вернуть переданный текст, дописав к нему " finished"
 def func_str_02( msg ):
-    return msg + "finished"
+    return msg + " finished"
 
 
 # Вернуть переданный текст, заменив все буквы на заглавные
