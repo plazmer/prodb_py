@@ -17,14 +17,15 @@ def func_num_02( number ):
 
 # Если переданное число больше 2.5, вернуть 1, если меньше 2.5 вернуть 0
 def func_num_03( number ):
-        if number > 2.5:
-		return 1
-	else:
-		return 0
+    if number > 2.5:
+        return 1
+    else:
+        return 0
+
 
 # Передана строка, содержащая целое число. Вернуть число, умноженное на 5
-def func_num_04( string="x"):
-    return int(string)*5
+def func_num_04( string ):
+    return int( string )*5
 
 
 # Передано дробное число, вернуть целую часть
@@ -39,36 +40,36 @@ def func_num_06( float_number ):
 
 ## STR
 # Вернуть текст "func01"
-def func_str_01(x = "func01"):
-    return x
+def func_str_01():
+    return "func01" 
 
 
 # Вернуть переданный текст, дописав к нему " finished"
-def func_str_02( msg = "func01"):
+def func_str_02( msg ):
     return msg + " finished"
 
 
 # Вернуть переданный текст, заменив все буквы на заглавные
-def func_str_03( msg = "funC01 finIshED" ):
+def func_str_03( msg ):
     return msg.upper()
 
 
 # Вернуть длину переданной строки
-def func_str_04( msg = "hello" ):
+def func_str_04( msg ):
     return len(msg)
 
 
 # Если длина текста больше 5 символов, вернуть с 3 по 5 символы, иначе вернуть пустую строку
-def func_str_05( msg ="9017263" ):
-    if len(msg) > 5:
-		return msg[3:5]
-	else:
-		return " "
+def func_str_05( msg ):
+    if len(msg) >= 5:
+        return msg[3:5]
+    else:
+        return ''
 
 
 # Передан шаблон и число, подставить внутрь шаблона число, вернуть результат
-def func_str_06( msg ="Вы дали число" , number = 54 ):
-    return ' %s %d ' % (msg, number)
+def func_str_06( msg , number ):
+    return msg % number
 
 
 # используется для проверки, 
@@ -93,7 +94,7 @@ def main():
     test('func_str_02', func_str_02('test'), 'test finished')
     test('func_str_03', func_str_03('tEsT по-РуссКи'), 'TEST ПО-РУССКИ')
     test('func_str_05', func_str_04('123'), 3)
-    test('func_str_05', func_str_05('1234'), '')
+    test('func_str_05', func_str_05('123'), '')
     test('func_str_05', func_str_05('12345'), '45')
     test('func_str_05', func_str_06('Вы дали число ** %s **', 42), 'Вы дали число ** 42 **')
      
