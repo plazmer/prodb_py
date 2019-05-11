@@ -75,8 +75,12 @@ def func_dict_02(arr):
     return None
 
 
-# Для каждого значения словаря дополнительно вернуть
+# Вернуть словарь, в котором числовые значения возведены в квадрат, не числовые значения не трогать
 def func_dict_03(arr):
+    return None
+
+# Если название ключа содержит Show, вернуть значение, иначе вернуть ""
+def func_dict_04(arr):
     return None
 
 
@@ -108,7 +112,9 @@ def main():
 
     test('func_dict_01',    func_dict_01(  {'a':1, 2:'b','c':[1,2]}), ['a', 2, 'c'])
     test('func_dict_02',    func_dict_02({'a': 1, 2: 'b', 'c': [1, 2]}), [1, 'b', [1, 2]])
-    test('func_dict_03',    func_dict_03({'a': 1, 2: 'b', 'c': [1, 2]}), [1, 'b', [1, 2]])
+    test('func_dict_03',    func_dict_03({'a': 2, 'b':'a', 'c': 3}), {'a': 4, 'b':'a', 'c': 9})
+    test('func_dict_04',    func_dict_04({'if you Show me': 1, 'b':'a'}), 1)
+    test('func_dict_04',    func_dict_04({'a': 2, 'b':'a', 'c': 3}), '')
 
 if __name__ == '__main__':
     main()
