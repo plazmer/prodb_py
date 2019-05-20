@@ -95,7 +95,7 @@ def test(msg, got, expected):
 
 def main():
     test('func_str_01',     func_str_01(    'This a test', 'is a', 5), 'This is a test')
-    test('func_list_01',    func_list_01(   [1,2,3,4,5]),           2)
+    test('func_list_01',    func_list_01(   [1,2,3,4,5]),           3)
     test('func_list_01',    func_list_01(   [1, 2, 3, 4, 5, 6]),    4)
     test('func_list_021',   func_list_021(  [1, 3, 6, 2, 9]),       [1, 2, 3, 6, 9])
     test('func_list_022',   func_list_022(  [1, 3, 6, 2, 9]),       [9, 6, 3, 2, 1])
