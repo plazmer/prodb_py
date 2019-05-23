@@ -32,35 +32,42 @@ def func_list_03(arr):
 
 # Возвращает элемент, ближайший к среднему значению элементов списка
 def func_list_04(arr):
-    return min(arr, key=lambda x:abs(x-float(sum(arr)) / max(len(arr), 1)
+    a=0
+    for i in arr:
+        a += i
+    a = a/len(arr)
+    return min(arr, key=lambda x: abs(x - a))
+
 
 
 # Возвращает сумму числовых элементов массива или тех, которые можно свести к числу
 def func_list_05(arr):
-        x=0
-	for y in arr:
-		try:
-			x+=float(y)
-		except:
-			pass
-	return x
+    x = 0
+    for y in arr:
+        try:
+            x += float(y)
+        except:
+            pass
+    return x
 
 
 # Принимает два списка, возвращает отсортированный список с уникальными элементами, которые есть в обоих списках
 def func_list_06(arr1, arr2):
-    return list(set(arr1 + arr2))
+	x = list(set(arr1 + arr2))
+	x.sort()
+	return x
 
 
 # Принимает список, возвращает tuple(кортеж) только из отсортированных чисел
 def func_tuple_01(arr):
-        x=[]
-	for y in arr:
-		if type(y)==int:
-			x.append(y)
-		else:
-			continue
-	x.sort()
-	return tuple(x)
+    x = []
+    for y in arr:
+        if type(y) == int:
+            x.append(y)
+        else:
+            continue
+    x.sort()
+    return tuple(x)
 
 
 
