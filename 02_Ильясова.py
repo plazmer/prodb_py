@@ -7,82 +7,103 @@
 
 # Заменить в переданной строке символ на указанной позиции на переданную строку
 def func_str_01(original_str, replace_str, position):
-    return None
+    return original_str[:position] + replace_str + original_str[position+1:]
 
 
 # Возвращает элемент из середины списка если число элементов нечетное, если число элементов четное - возвращает второй из двух посередине (правеее середины)
 def func_list_01(arr):
-    return None
+    return arr[len(arr)//2] if len(arr)%2==1 else arr[len(arr)//2]
 
 
 # Возвращает отсортированный список
 def func_list_021(arr):
-    return None
+    return sorted(arr)
 
 
 # Возвращает отсортированный список в обратную сторону
 def func_list_022(arr):
-    return None
+    return sorted(arr, reverse=True)
 
 
 # Возвращает самый большой элемент
 def func_list_03(arr):
-    return None
+    return max(arr)
 
 
 # Возвращает элемент, ближайший к среднему значению элементов списка
 def func_list_04(arr):
-    return None
+    return min(arr, key=lambda x:abs(x-float(sum(arr)) / max(len(arr), 1)
 
 
 # Возвращает сумму числовых элементов массива или тех, которые можно свести к числу
 def func_list_05(arr):
-    return None
+        x=0
+	for y in arr:
+		try:
+			x+=float(y)
+		except:
+			pass
+	return x
 
 
 # Принимает два списка, возвращает отсортированный список с уникальными элементами, которые есть в обоих списках
 def func_list_06(arr1, arr2):
-    return None
+    return list(set(arr1 + arr2))
 
 
 # Принимает список, возвращает tuple(кортеж) только из отсортированных чисел
 def func_tuple_01(arr):
-    return None
+        x=[]
+	for y in arr:
+		if type(y)==int:
+			x.append(y)
+		else:
+			continue
+	x.sort()
+	return tuple(x)
+
 
 
 # Для списков имен и оценок вернуть список из кортежей (имя, значение)
 def func_tuple_02(names, values):
-    return None
-
+    return list(zip(names, values))
 
 # Для списков имен и оценок вернуть список из кортежей (имя, значение)
 def func_tuple_02(names, values):
-    return None
+    return list(zip(names, values))
 
 
 # Для кортежа из двух элементов поменять местами первый и последний элементы
 def func_tuple_03(tupl):
-    return None
+    return tupl[1], tupl[0]
 
 
 # Для словаря вернуть список ключей
 def func_dict_01(arr):
-    return None
+    return arr.keys()
 
 
 # Для словаря вернуть список значений
 def func_dict_02(arr):
-    return None
+    return arr.values()
 
 
 # Вернуть словарь, в котором числовые значения возведены в квадрат, не числовые значения не трогать
 def func_dict_03(arr):
-    return None
+    for x in arr.keys():
+        try:
+            arr[x] = arr.get(x) ** 2
+        except:
+            pass
+    return arr
 
 # Если название ключа содержит Show, вернуть значение, иначе вернуть ""
 def func_dict_04(arr):
-    return None
-
+    for x in arr.keys():
+        if 'Show' in x != -1:
+            return arr.get(x)
+        else:
+            return ''
 
 # используется для проверки, 
 def test(msg, got, expected):
