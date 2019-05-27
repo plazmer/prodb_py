@@ -87,12 +87,18 @@ def func_tuple_03(tupl):
 
 # Для словаря вернуть список ключей
 def func_dict_01(arr):
-    return arr.keys()
+	x = []
+	for y in arr.keys():
+		x.append(y)
+	return x
 
 
 # Для словаря вернуть список значений
 def func_dict_02(arr):
-    return arr.values()
+	x = []
+	for y in arr.values():
+		x.append(y)
+	return x
 
 
 # Вернуть словарь, в котором числовые значения возведены в квадрат, не числовые значения не трогать
